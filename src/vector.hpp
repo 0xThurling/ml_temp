@@ -1,11 +1,14 @@
 #pragma once
 
+#include <algorithm>
 #include <cmath>
 #include <cstddef>
 #include <numeric>
 #include <ostream>
 #include <stdexcept>
 #include <vector>
+
+#define M_PI 3.14159265358979323846 /* pi */
 
 class Vector {
 public:
@@ -41,13 +44,9 @@ public:
     return Vector(std::move(result));
   }
 
-  value_type operator[](std::size_t i) const {
-    return _components[i];
-  }
+  value_type operator[](std::size_t i) const { return _components[i]; }
 
-  value_type& operator[](std::size_t i) {
-    return _components[i];
-  }
+  value_type &operator[](std::size_t i) { return _components[i]; }
 
   value_type dot(const Vector &other) const {
     check_same_dim(other);
@@ -64,6 +63,17 @@ public:
     return std::sqrt(sum_sq);
   }
 
+  value_type angle_degrees(const Vector &b) {
+    const double na = magnitude();
+    const double nb = b.magnitude();
+
+    const double denom = na * nb;
+    double c = dot(b) / denom;
+    c = std::max(-1.0, std::min(1.0, c));
+    double radians = std::acos(c);
+    return radians * (180 / M_PI);
+  }
+
   Vector normalize() const {
     auto mag = magnitude();
     if (mag == value_type{0}) {
@@ -78,7 +88,7 @@ public:
     return Vector(std::move(result));
   }
 
-  const std::vector<value_type>& components() const noexcept {
+  const std::vector<value_type> &components() const noexcept {
     return _components;
   }
 

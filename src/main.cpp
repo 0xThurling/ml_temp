@@ -101,17 +101,8 @@ std::vector<Vector> gram_schmidt(const std::vector<Vector>& vectors) {
 
 int main() {
     Vector v1({1, 0, 0});
-    Vector v2({1, 1, 0});
-    Vector v3({1, 1, 1});
+    Vector v2({0, 1, 0});
 
-    std::vector<Vector> basis = gram_schmidt({v1, v2, v3});
-
-    for (std::size_t i = 0; i < basis.size(); ++i) {
-        std::cout << "u" << (i + 1) << " = " << basis[i] << '\n';
-        std::cout << "  |u" << (i + 1) << "| = " << basis[i].magnitude() << '\n';
-    }
-
-    std::cout << "u1 · u2 = " << basis[0].dot(basis[1]) << '\n';
-    std::cout << "u1 · u3 = " << basis[0].dot(basis[2]) << '\n';
-    std::cout << "u2 · u3 = " << basis[1].dot(basis[2]) << '\n';
+    std::cout << "angle = " << v1.angle_degrees(v2) << " degrees\n";
+    return 0;
 }
