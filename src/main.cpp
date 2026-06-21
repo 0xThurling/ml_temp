@@ -1,12 +1,13 @@
 #include "vector.hpp"
+#include "matrix.hpp"
 #include <iostream>
 
 int main() {
-    Vector a({1, 2, 3});
-    Vector b({4, 5, 6});
+    Matrix rotation_90({{0, -1}, {1, 0}});
+    Vector point({3, 1});
 
-    std::cout << "a + b = " << (a + b) << '\n';
-    std::cout << "a · b = " << a.dot(b) << '\n';
-    std::cout << "|a| = " << a.magnitude() << '\n';
-    std::cout << "cosine similarity = " << a.cosine_similarity(b) << '\n';
+    Vector rotated = rotation_90 * point;
+
+    std::cout << "Original: " << point << '\n';
+    std::cout << "Rotated 90°: " << rotated << '\n';
 }

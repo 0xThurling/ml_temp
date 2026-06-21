@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cmath>
 #include <cstddef>
 #include <numeric>
@@ -37,6 +39,10 @@ public:
     }
 
     return Vector(std::move(result));
+  }
+
+  value_type operator[](std::size_t i) const {
+    return _components[i];
   }
 
   value_type dot(const Vector &other) const {
