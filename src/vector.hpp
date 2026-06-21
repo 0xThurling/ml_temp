@@ -45,6 +45,10 @@ public:
     return _components[i];
   }
 
+  value_type& operator[](std::size_t i) {
+    return _components[i];
+  }
+
   value_type dot(const Vector &other) const {
     check_same_dim(other);
     return std::inner_product(_components.begin(), _components.end(),
@@ -72,6 +76,10 @@ public:
       result.push_back(x / mag);
     }
     return Vector(std::move(result));
+  }
+
+  const std::vector<value_type>& components() const noexcept {
+    return _components;
   }
 
   value_type cosine_similarity(const Vector &other) const {

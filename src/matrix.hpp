@@ -82,6 +82,10 @@ public:
     return Matrix(std::move(result));
   }
 
+  const std::vector<std::vector<value_type>> &data() const noexcept {
+    return _rows;
+  }
+
   friend std::ostream &operator<<(std::ostream &os, const Matrix &m) {
     os << "Matrix([";
 
