@@ -3,6 +3,7 @@
 #include "vector.hpp"
 #include <algorithm>
 #include <cstddef>
+#include <iostream>
 #include <ostream>
 #include <stdexcept>
 #include <vector>
@@ -18,7 +19,6 @@ public:
     }
 
     const std::size_t ncols = _rows[0].size();
-
     if (ncols == 0) {
       throw std::runtime_error("matrix cannot have empty rows");
     }
@@ -30,7 +30,7 @@ public:
     }
   }
 
-  std::size_t rows() const noexcept { return _rows[0].size(); }
+  std::size_t rows() const noexcept { return _rows.size(); }
 
   std::size_t cols() const noexcept { return _rows[0].size(); }
 
