@@ -182,6 +182,17 @@ public:
                    {_rows[1][0] / det, -_rows[0][0] / det}});
   }
 
+  static Matrix identity(std::size_t n) {
+    std::vector<std::vector<value_type>> rows(
+        n, std::vector<value_type>(n, value_type{0}));
+
+    for (std::size_t i = 0; i < n; ++i) {
+      rows[i][i] = value_type{1};
+    }
+
+    return Matrix(std::move(rows));
+  }
+
   const std::vector<std::vector<value_type>> &data() const noexcept {
     return _rows;
   }
