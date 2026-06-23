@@ -2,6 +2,7 @@
 
 #include "vector.hpp"
 #include <cmath>
+#include <complex>
 #include <cstddef>
 #include <cstdlib>
 #include <iostream>
@@ -183,6 +184,60 @@ public:
                    {_rows[1][0] / det, -_rows[0][0] / det}});
   }
 
+  Matrix eigenvalues_2x2() const {
+    if (rows() != 2) {
+      throw std::runtime_error("eigenvalues_2x2 requires a 2x2 matrix");
+    }
+
+    value_type a = _rows[0][0];
+    value_type b = _rows[0][1];
+    value_type c = _rows[1][0];
+    value_type d = _rows[1][1];
+
+    auto trace = a + b;
+    auto det = a * d - b * c;
+    auto discriminant = (trace * trace) - 4 * det;
+
+    if (discriminant < 0) {
+      auto real = trace / 2;
+      auto imag = std::sqrt(-discriminant) / 2;
+      return Matrix({{real, imag}, {real, -imag}});
+    } else {
+      const double s = std::sqrt(discriminant);
+      return Matrix({{(trace + s) / 2.0, 0.0}, {(trace - s) / 2.0, 0.0}});
+    }
+  }
+
+  Vector eigenvector_2x2(std::complex<value_type> lambda) const {
+    if (rows() != 2) {
+      throw std::runtime_error("eigenvalues_2x2 requires a 2x2 matrix");
+    }
+
+    value_type a = _rows[0][0];
+    value_type b = _rows[0][1];
+    value_type c = _rows[1][0];
+    value_type d = _rows[1][1];
+
+    double v0, v1;
+
+    if (std::abs(b) > 1e-10) {
+      v0 = b;
+      v1 = (lambda - a).real();
+    } else if (std::abs(c) > 1e-10) {
+      v0 = (lambda - d).real();
+      v1 = c;
+    } else {
+      if (std::abs(a - lambda.real()) < 1e-10) {
+        v0 = 1, v1 = 0;
+      } else {
+        v0 = 0, v1 = 1;
+      }
+    }
+
+    const value_type mag = std::sqrt(v0 * v0 + v1 * v1);
+    return Vector({v0 / mag, v1 / mag});
+  }
+
   static Matrix rotation_2d(const value_type &theta) {
     value_type c = std::cos(theta);
     value_type s = std::sin(theta);
@@ -198,13 +253,9 @@ public:
     return Matrix({{1, kx}, {ky, 1}});
   }
 
-  static Matrix reflection_x() {
-    return Matrix({{1, 0}, {0, -1}});
-  }
+  static Matrix reflection_x() { return Matrix({{1, 0}, {0, -1}}); }
 
-  static Matrix reflection_y() {
-    return Matrix({{-1, 0}, {0, 1}});
-  }
+  static Matrix reflection_y() { return Matrix({{-1, 0}, {0, 1}}); }
 
   static Matrix identity(std::size_t n) {
     std::vector<std::vector<value_type>> rows(
