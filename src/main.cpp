@@ -1,5 +1,5 @@
-#include "matrix.hpp"
-#include "vector.hpp"
+#include "core/matrix.hpp"
+#include "core/vector.hpp"
 #include <cmath>
 #include <stdexcept>
 #include <vector>
