@@ -1,13 +1,20 @@
-#include "core/vector.hpp"
+#include "math/calc.hpp"
 #include "math/linalg.hpp"
-#include "utils/assertions.hpp"
-#include <vector>
+#include <iomanip>
 
 int main() {
-    Vector v1({1, 0});
-    Vector v2({0, 1});
+  double xs[] = {-2.0, -1.0, 0.0, 1.0, 2.0};
 
-    auto test = forgeml::project(v1, v2);
+  std::cout << std::fixed << std::setprecision(6);
+  for (double x : xs) {
+    double numerical = forgeml::numerical_derivative(forgeml::f, x);
+    double analytical = 2.0 * x;
 
-    ML_ASSERT(test.cosine_similarity(v2) == 1, "Not similar vectors");
+    std::cout << "x=" << std::setw(2) << static_cast<int>(x)
+              << "  f'(x) numerical=" << numerical
+              << "  analytical=" << std::setprecision(1) << analytical
+              << std::setprecision(6) << "\n";
+  }
+
+  return 0;
 }
