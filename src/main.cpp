@@ -1,6 +1,6 @@
 #include "math/calc.hpp"
-#include "math/linalg.hpp"
 #include <iomanip>
+#include <iostream>
 
 int main() {
   double xs[] = {-2.0, -1.0, 0.0, 1.0, 2.0};
